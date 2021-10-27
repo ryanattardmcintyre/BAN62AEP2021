@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<form action="/Blogs/Create" method="post">
+
+    <table>
+        <tr>
+            <td>Name: </td>
+            <td><input type="text" /></td>
+        </tr>
+
+        <tr>
+            <td>Logo: </td>
+            <td><input type="file" /></td>
+        </tr>
+
+        <tr>
+            <td>Category: </td>
+            <td><select>
+                @foreach(var c in ViewBag.Categories)
+                {
+                    <option value="@c.Id" >@c.Name</option>
+
+                }
+                </select></td>
+        </tr>
+
+    </table>
+
+    <input type="submit" value="Submit" />
+
+</form>
