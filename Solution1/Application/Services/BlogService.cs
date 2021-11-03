@@ -19,7 +19,15 @@ namespace Application.Services
 
         public void AddBlog(BlogCreationModel b)
         {
-    
+            blogRepo.AddBlog(
+                new Domain.Models.Blog()
+                {
+                    CategoryId = b.CategoryId,
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now,
+                    LogoImagePath = b.LogoImagePath,
+                    Name = b.Name
+                });
         }
 
         public BlogViewModel GetBlog(int id)
