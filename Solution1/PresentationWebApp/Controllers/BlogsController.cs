@@ -48,6 +48,7 @@ namespace PresentationWebApp.Controllers
         }
 
         [HttpPost]
+        [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
         public IActionResult Create(BlogCreationModel model, IFormFile logoFile)
         {
             try
@@ -67,12 +68,15 @@ namespace PresentationWebApp.Controllers
                         string newFilename = Guid.NewGuid() + System.IO.Path.GetExtension(logoFile.FileName);
 
                         //2. get the absolute path of the folder "Files"
-                        string absolutePath =  Path.Combine(hostEnvironment.WebRootPath, newFilename);
+                        string absolutePath = hostEnvironment.WebRootPath + "\\Files\\" + newFilename;
 
                         //3. save the file into the absolute Path
-
-                        // FileStream fs = new FileStream("\Files\"+newFilename, FileMode.CreateNew, FileAccess.ReadWrite);
-                        //  fs.Close();
+                        using(FileStream fs = new FileStream(absolutePath, FileMode.CreateNew, FileAccess.Write))
+                        {
+                            logoFile.CopyTo(fs);
+                            fs.Close();
+                        }
+                        model.LogoImagePath = "\\Files\\" + newFilename;
                     }
 
                     service.AddBlog(model);
@@ -93,7 +97,32 @@ namespace PresentationWebApp.Controllers
 
 
 
+        public IActionResult Delete (int id)
+        {
+            try
+            {
+                var blog = service.GetBlog(id);
+                string absolutePathOfImageToDelete = hostEnvironment.WebRootPath + blog.LogoImagePath;
 
+                service.DeleteBlog(id);
+
+                System.IO.File.Delete(absolutePathOfImageToDelete);
+
+                //ViewBag.Message = "Blog deleted successfully";
+
+                TempData["Message"] = "Blog deleted successfully";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            //ViewBag/ViewData does not survive a redirection
+            //TempData survives a redirection
+            //ControllerContext.HttpContext.Session survives every redirection but it saves the data on the server
+
+            return RedirectToAction("Index");
+        }
 
     }
 }

@@ -30,6 +30,19 @@ namespace Application.Services
                 });
         }
 
+        public void DeleteBlog(int id)
+        {
+            var blog = blogRepo.GetBlog(id);
+            if(blog != null)
+            {
+                blogRepo.DeleteBlog(blog);
+            }
+            else
+            {
+                throw new Exception("Blog does not exist");
+            }
+        }
+
         public BlogViewModel GetBlog(int id)
         {
             BlogViewModel myModel = new BlogViewModel();

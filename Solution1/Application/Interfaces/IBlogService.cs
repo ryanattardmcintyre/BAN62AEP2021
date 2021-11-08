@@ -12,5 +12,7 @@ namespace Application.Interfaces
         public IQueryable<BlogViewModel> GetBlogs();
         public BlogViewModel GetBlog(int id);
         public void AddBlog(BlogCreationModel b);
+
+        public void DeleteBlog(int id);
     }
 }
