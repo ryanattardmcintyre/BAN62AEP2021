@@ -53,6 +53,8 @@ namespace PresentationWebApp
             services.AddScoped<IBlogRepository, BlogRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+ 
+
 
         }
 
