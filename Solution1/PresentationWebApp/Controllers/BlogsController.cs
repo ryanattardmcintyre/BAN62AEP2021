@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PresentationWebApp.Controllers
 {
+    [Authorize]
     public class BlogsController : Controller
     {
         private IWebHostEnvironment hostEnvironment;
