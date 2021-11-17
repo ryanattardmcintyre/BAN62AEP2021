@@ -70,7 +70,8 @@ namespace Application.Services
                     Category = b.Category,
                     DateUpdated = b.DateUpdated,
                     LogoImagePath = b.LogoImagePath,
-                    Name = b.Name
+                    Name = b.Name,
+                     
                 });
             }
 

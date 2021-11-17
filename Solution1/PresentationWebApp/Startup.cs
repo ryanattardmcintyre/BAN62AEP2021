@@ -3,6 +3,7 @@ using Application.Services;
 using DataAccess.Context;
 using DataAccess.Repositories;
 using Domain.Interfaces;
+using Domain.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,12 +38,12 @@ namespace PresentationWebApp
                     Configuration.GetConnectionString("DefaultConnection")));
 
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-              options.UseSqlServer(
-                  Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //  options.UseSqlServer(
+            //      Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<CustomUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<BloggingContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
