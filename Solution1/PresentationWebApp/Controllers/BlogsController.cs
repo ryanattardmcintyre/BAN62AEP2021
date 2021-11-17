@@ -9,7 +9,6 @@ using Application.ViewModels;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace PresentationWebApp.Controllers
 {
@@ -18,17 +17,15 @@ namespace PresentationWebApp.Controllers
         private IWebHostEnvironment hostEnvironment;
         private IBlogService service;
         private ICategoryService categoryService;
-        private ILogger<BlogsController> logger;
-        public BlogsController(ILogger<BlogsController> _logger, IBlogService _service, ICategoryService _categoryService, IWebHostEnvironment _hostEnvironment)
+        public BlogsController(IBlogService _service, ICategoryService _categoryService, IWebHostEnvironment _hostEnvironment)
         {
-            logger = _logger;
             service = _service;
             categoryService = _categoryService;
             hostEnvironment = _hostEnvironment;
         }
 
         public IActionResult Index()
-        {
+        { 
             var list = service.GetBlogs();
             return View(list);
         }
@@ -41,7 +38,7 @@ namespace PresentationWebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create ()
         {
             var list = categoryService.GetCategories();
             ViewBag.Categories = list;
@@ -56,34 +53,29 @@ namespace PresentationWebApp.Controllers
         {
             try
             {
-                logger.Log(LogLevel.Information, "User accessed the Create method");
-
                 if (string.IsNullOrEmpty(model.Name))
                 {
                     ViewBag.Error = "Name should not be left empty";
                 }
                 else
                 {
-                    if (logoFile != null)
+                    if(logoFile != null)
                     {
                         //save the file
 
                         //1. generate a new unique filename for the file
 
                         string newFilename = Guid.NewGuid() + System.IO.Path.GetExtension(logoFile.FileName);
-                        logger.Log(LogLevel.Information, $"Guid generated for file {logoFile.FileName} is {newFilename}");
 
                         //2. get the absolute path of the folder "Files"
                         string absolutePath = hostEnvironment.WebRootPath + "\\Files\\" + newFilename;
-                        logger.Log(LogLevel.Information, $"Absolute path read is {absolutePath}");
+
                         //3. save the file into the absolute Path
-                        using (FileStream fs = new FileStream(absolutePath, FileMode.CreateNew, FileAccess.Write))
+                        using(FileStream fs = new FileStream(absolutePath, FileMode.CreateNew, FileAccess.Write))
                         {
                             logoFile.CopyTo(fs);
                             fs.Close();
                         }
-
-                        logger.Log(LogLevel.Information, "File was saved successfully");
                         model.LogoImagePath = "\\Files\\" + newFilename;
                     }
 
@@ -94,7 +86,7 @@ namespace PresentationWebApp.Controllers
             catch (Exception ex)
             {
                 //log ex
-                logger.Log(LogLevel.Error, ex, "Error occurred while uploading file " + logoFile.FileName);
+
                 ViewBag.Error = "Blog was not added due to an error. try later";
 
             }
@@ -102,6 +94,7 @@ namespace PresentationWebApp.Controllers
             ViewBag.Categories = list;
             return View();
         }
+
 
 
         public IActionResult Delete (int id)
