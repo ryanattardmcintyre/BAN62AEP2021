@@ -10,26 +10,33 @@
     
     <hr />
     <dl class="row">
-       @*this is a comment*@
+        @*this is a comment*@
 
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
             <label>Date Updated</label>
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             <span>@Model.DateUpdated.ToShortDateString()</span>
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             <label>Logo</label>
         </dt>
-        <dd class = "col-sm-10">
-           <img src="@Model.LogoImagePath" style="width:200px;height:200px;" />
+        <dd class="col-sm-10">
+            <img src="@Model.LogoImagePath" style="width:200px;height:200px;" />
 
+        </dd>
+
+        <dt class="col-sm-2">
+            <label>Category</label>
+        </dt>
+        <dd class="col-sm-10">
+           <span>@Model.Category.Name</span>
         </dd>
     </dl>
 </div>

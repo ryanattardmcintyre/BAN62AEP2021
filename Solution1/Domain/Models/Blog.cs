@@ -17,7 +17,7 @@ namespace Domain.Models
 
         [ForeignKey("Category")] //this specifies that the CategoryId is the foreign key representing the reference with name "Category
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; } //navigational property because through this property you can access fields in another "table"
 
     }
 }

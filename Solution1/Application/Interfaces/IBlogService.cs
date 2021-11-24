@@ -14,5 +14,8 @@ namespace Application.Interfaces
         public void AddBlog(BlogCreationModel b);
 
         public void DeleteBlog(int id);
+
+        public void UpdateBlog(BlogViewModel updatedBlog);
+        
     }
 }

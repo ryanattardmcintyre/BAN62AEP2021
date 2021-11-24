@@ -9,9 +9,11 @@ using Application.ViewModels;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PresentationWebApp.Controllers
 {
+    [Authorize]
     public class BlogsController : Controller
     {
         private IWebHostEnvironment hostEnvironment;
@@ -24,6 +26,7 @@ namespace PresentationWebApp.Controllers
             hostEnvironment = _hostEnvironment;
         }
 
+        
         public IActionResult Index()
         { 
             var list = service.GetBlogs();
